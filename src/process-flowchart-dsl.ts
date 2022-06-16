@@ -40,13 +40,13 @@ var bp: BlockParser = new BlockParser();
 var block: Block = new Block();
 bp.parse(block.children, stream, 0);
 
-// var btc4: BlockToC4Converter = new BlockToC4Converter();
+var btc4: BlockToFlowchartConverter = new BlockToFlowchartConverter();
 
-// var ws: C4Workspace = btc4.convert(block);
+var ws: FlowchartWorkspace = btc4.convert(block);
 
-// var publisher: WorkspacePublisher = new WorkspacePublisher();
+var publisher: WorkspacePublisher = new WorkspacePublisher();
 
 //var newText: string = fullText;
 
-//var newText = "```mermaid" + "\r\n" + publisher.publish(ws, "Component", "MERMAID") + "\r\n" + "```";
-//fs.writeFileSync(myArgs[1], newText);
+var newText = "```mermaid" + "\r\n" + publisher.publish(ws, "Component", "MERMAID") + "\r\n" + "```";
+fs.writeFileSync(myArgs[1], newText);

@@ -15,7 +15,7 @@ export class BlockToFlowchartConverter
         for (var bn = 0; bn < block.children.length; bn++)
         {
             child = block.children[bn];
-            if(this.ciEquals(child.blockText, "workspace")) {
+            if(this.ciEquals(child.blockText, "flow")) {
                 rtnVal = this.convertWorkspace(child);
             }
         }
@@ -38,22 +38,23 @@ export class BlockToFlowchartConverter
             for (var bn = 0; bn < block.children.length; bn++)
             {
                 child = block.children[bn];
+                this.convertFlowItem(rtnVal.items, rtnVal.relationships, child);
 
-                if(this.ciEquals(child.blockText, "items")) {
-                    for (var gcn = 0; gcn < child.children.length; gcn++)
-                    {
-                        grandChild = child.children[gcn];
-                        this.convertItem(rtnVal.items, grandChild);
-                 }
-             }
+                // if(this.ciEquals(child.blockText, "items")) {
+                //     for (var gcn = 0; gcn < child.children.length; gcn++)
+                //     {
+                //         grandChild = child.children[gcn];
+                //         this.convertItem(rtnVal.items, grandChild);
+                //     }
+                // }
 
-              if(this.ciEquals(child.blockText, "connections")) {
-                for (var gcn = 0; gcn < child.children.length; gcn++)
-                {
-                    grandChild = child.children[gcn];
-                    this.convertConnection(rtnVal.relationships, grandChild);
-                }
-            }
+            //   if(this.ciEquals(child.blockText, "connections")) {
+            //     for (var gcn = 0; gcn < child.children.length; gcn++)
+            //     {
+            //         grandChild = child.children[gcn];
+            //         this.convertConnection(rtnVal.relationships, grandChild);
+            //     }
+            //   }
          }
 
          return rtnVal;
@@ -322,6 +323,104 @@ convertItem(items: FlowchartItem[], block: Block){
         items.push(newItem);
     }
 }
+
+convertFlowItem(items: FlowchartItem[], connections: FlowchartRelationship[], block: Block){
+    var newItem: FlowchartItem = new FlowchartItem();
+
+    var parts: string[];
+
+    var lp: LineParser = new LineParser();
+    parts = lp.parse(block.blockText);
+
+    var itemType: string = "";
+    var itemId: string = "";
+    var technology: string = "";
+    var label: string = "";
+    var description: string = "";
+
+       for (var pn = 0; pn < parts.length; pn++)
+       {
+            var str = parts[pn];
+
+        if (pn === 0)
+        {
+            itemType = str;
+        }
+       else if (pn === 1)
+       {
+           itemId = str;
+       }
+       else
+       {
+            if (str[0] === "(")
+            {
+               description = str.trim();
+               description = description.substring(1, description.length - 2);
+            }
+            else
+            {
+                label = str.trim();
+            }
+        }
+    }
+
+    itemType = itemType.toUpperCase();
+    switch(itemType)
+    {
+        case "BOUNDARY":
+           newItem = new FlowchartItem ();
+           newItem.itemType = itemType;
+           newItem.label = label;
+           newItem.id = itemId;
+           newItem.description = description;
+           for (var cn = 0; cn < block.children.length; cn++)
+           {
+                var child = block.children[cn];
+                this.convertItem(newItem.items, child);
+            }
+    
+            items.push(newItem);
+            break;
+        case "ACTION":
+            newItem = new FlowchartItem ();
+            newItem.itemType = itemType;
+            newItem.label = label;
+            newItem.id = itemId;
+            newItem.description = description;
+            items.push(newItem);
+            break;
+        case "DECISION":
+            newItem = new FlowchartItem ();
+            newItem.itemType = itemType;
+            newItem.label = label;
+            newItem.id = itemId;
+            newItem.description = description;
+            items.push(newItem);
+            break;
+        case "CONNECTION":
+            var newConn: FlowchartRelationship = new FlowchartRelationship();
+            if(parts.length === 4)
+            {
+                newConn.from = parts[1];
+                newConn.to = parts[2];
+                newConn.label = parts[3].trim();
+            }
+    
+            if(parts.length === 3)
+            {
+                newConn.from = parts[1];
+                newConn.to = parts[2];
+                newConn.label = " ";
+            }
+    
+            if (newConn !== null)
+            {
+                connections.push(newConn);
+            }
+                break;
+    }
+}
+
     // convertConnection(connections: C4Relationship[], block: Block) {
     //     var newItem: C4Relationship = new C4Relationship();
 
@@ -392,15 +491,15 @@ convertItem(items: FlowchartItem[], block: Block){
         if(parts.length === 3)
         {
             origin = parts[0];
-            label = parts[1].trim();
-            destination = parts[2];
+            destination = parts[1];
+            label = parts[2].trim();
         }
 
         if(parts.length ===2)
         {
             origin = parts[0];
-            label = " ";
             destination = parts[1];
+            label = " ";
         }
 
         newItem = new FlowchartRelationship();

@@ -34,10 +34,10 @@
 			"type": "node",
 			"request": "launch",
 			"name": "Launch Program",
-			"program": "${workspaceFolder}/out/process-c4dsl.js",
+			"program": "${workspaceFolder}/out/process-flowchart-dsl.js",
 			"args": ["myFolder/path/app.js"],
 			"windows": {
-			  "args": ["${workspaceFolder}\\src\\sample.c4dsl", "${workspaceFolder}\\src\\sample2.md"]
+			  "args": ["${workspaceFolder}\\src\\sample.flow", "${workspaceFolder}\\src\\sample2.md"]
 			},
 			"preLaunchTask": "${defaultBuildTask}"
 		  }

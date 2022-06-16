@@ -76,6 +76,7 @@ export class WorkspacePublisher
         var indentation: string = this.buildIndentation(indent);
         var displayType:string = item.itemType;
         var goDeeper: boolean = true;
+        var brokenLabel: string = item.label.replace("`", "<br/>");
 
         switch (item.itemType)
         {
@@ -87,7 +88,7 @@ export class WorkspacePublisher
                 }
                 else
                 {
-                    sb.append(`${indentation}subgraph ${item.id}[${item.label}]`);
+                    sb.append(`${indentation}subgraph ${item.id}[${brokenLabel}]`);
                     sb.append("\r\n");
                     indent++;
         
@@ -103,10 +104,10 @@ export class WorkspacePublisher
                 }
                 break;
             case "ACTION":
-                sb.appendLine(`${indentation}${item.id}[${item.label}]`);
+                sb.appendLine(`${indentation}${item.id}[${brokenLabel}]`);
                 break;
             case "DECISION":
-                sb.appendLine(`${indentation}${item.id}{${item.label}}`);
+                sb.appendLine(`${indentation}${item.id}{${brokenLabel}}`);
                 break;
         }
 
