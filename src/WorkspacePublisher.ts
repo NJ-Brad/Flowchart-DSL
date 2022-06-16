@@ -76,7 +76,12 @@ export class WorkspacePublisher
         var indentation: string = this.buildIndentation(indent);
         var displayType:string = item.itemType;
         var goDeeper: boolean = true;
-        var brokenLabel: string = item.label.replace("`", "<br/>");
+        // var brokenLabel: string = item.label.replace("`", "<br/>");
+        
+        // https://bobbyhadz.com/blog/javascript-typeerror-replaceall-is-not-a-function
+        var brokenLabel: string = item.label.split('`').join('<br/>');
+
+        brokenLabel = `\"${brokenLabel}\"` ;
 
         switch (item.itemType)
         {
@@ -88,19 +93,16 @@ export class WorkspacePublisher
                 }
                 else
                 {
-                    sb.append(`${indentation}subgraph ${item.id}[${brokenLabel}]`);
-                    sb.append("\r\n");
+                    sb.appendLine(`${indentation}subgraph ${item.id}[${brokenLabel}]`);
                     indent++;
         
                     var item2: FlowchartItem;
                     for (var itmNum = 0; itmNum < item.items.length; itmNum++)
                     {
                         item2= item.items[itmNum];
-                        sb.append(this.mermaidItem(item2, indent).trimEnd());
-                        sb.append("\r\n");
+                        sb.appendLine(this.mermaidItem(item2, indent).trimEnd());
                     }
-                    sb.append(`${indentation}end`);
-                    sb.append("\r\n");
+                    sb.appendLine(`${indentation}end`);
                 }
                 break;
             case "ACTION":
