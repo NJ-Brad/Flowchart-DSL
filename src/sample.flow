@@ -1,0 +1,37 @@
+workspace 
+[
+    items
+    [
+        action a1 "Start"
+        decision d1 "What day of the week is it?"
+        action a2 "Take out the trash"
+        action a3 "Take out the recycling"
+        action a4 "Relax"
+        decision d2 "Is it the alternate week?"
+    ]
+
+    connections
+    [
+        a1 d1
+        d1 "Sunday" a2
+        d1 "Tuesday" d2
+        d2 "Yes" a3
+        d2 "No" a4
+        d1 "Wednesday" a2
+        d1 "Other" a4
+    ]
+]
+flowchart TB
+    a1[Start]
+    d1{What day of the week is it?}
+    a2[Take out the trash]
+    a3[Take out the recycling]
+    a4[Relax]
+    d2{Is it the alternate week?}
+    a1--" "-->d1
+    d1--"Sunday"-->a2
+    d1--"Tuesday"-->d2
+    d2--"Yes"-->a3
+    d2--"No"-->a4
+    d1--"Wednesday"-->a2
+    d1--"Other"-->a4
