@@ -1,0 +1,82 @@
+flow 
+[
+    action a0 "Start"
+	connection a0 a1
+    action a1 "Loan Type"
+	connection a1 a2
+	action a2 "Home Description"
+	connection a2 a3
+	action a3 "Property Use"
+	connection a3 d0
+    decision d0 "Loan Type = Purchase"
+	yes d0 a4
+	no d0 d1
+	action a4 "Timeframe to Purchase"
+	connection a4 a5
+	action a5 "First Time Home Buyer"
+	decision d1 "Loan Type = Refinance"
+	action a6 "Home Value"
+	action a7 "Loan Purpose Refi/Cashout"
+	connection a7 a6
+	connection a8 d3
+	yes d1 a7
+	no d1 a6
+
+	connection a6 d2
+	decision d2 "Loan Purpose = Refi/Cashout"
+	yes d2 a8
+	no d2 d3
+	Action a8 "Mortgage Balance"
+	decision d3 "Loan Type = Cashout`OR Loan Purpose = Cashout Refi`OR Loan Purpose = Take Cash Out"
+	yes d3 a9
+	action a9 "Additional Funds"
+	no d3 a10
+	connection a9 a10
+	connection a5 a10
+	action a10 "Military"
+	connection a10 d4
+	decision d4 "Loan Type = Purchase"
+	Yes d4 a11
+	no d4 a14
+	action a11 "Working w/Agent"
+	connection a11 a12
+	action a12 "Purchase Price"
+	connection a12 a13
+	Action a13 "Down Payment"
+	connection a13 a14
+	Action a14 "Credit Profile"
+	connection a14 d5
+	decision d5 "Loan Type = Refi/C.O."
+	yes d5 a15
+	no d5 d6
+	action a15 "Second Mortgage"
+	decision d6 "QPV = NoEmp"
+	connection a15 d6
+	no d6 a16
+	action a16 "Employment Status"
+	connection a16 a17
+	action a17 "Bankruptcy"
+	yes d6 d7
+	decision d7 "Loan Type = Purchase`And F.T.H.B. = No"
+	no d7 a17
+	yes d7 a18
+	action a18 "Late Payments"
+	connection a18 a19
+	Action a19 "Foreclosure"
+	connection a19 a17
+	connection a17 a20
+	action a20 "Name"
+	connection a20 a21
+	action a21 "Home Phone"
+	connection a21 a22
+	action a22 "Email"
+	connection a22 a23
+	action a23 "Address and Zip"
+	connection a23 a24
+	action a24 "Submit Transaction"
+	connection a24 d8
+	decision d8 "Error"
+	yes d8 a23
+	no d8 a25
+	action a25 "Redirect to /thank-you"
+]

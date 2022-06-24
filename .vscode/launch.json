@@ -37,7 +37,7 @@
 			"program": "${workspaceFolder}/out/process-flowchart-dsl.js",
 			"args": ["myFolder/path/app.js"],
 			"windows": {
-			  "args": ["${workspaceFolder}\\src\\pull-request-comments.flow", "${workspaceFolder}\\src\\sample2.md"]
+			  "args": ["${workspaceFolder}\\src\\wham.flow", "${workspaceFolder}\\src\\wham.md"]
 			},
 			"preLaunchTask": "${defaultBuildTask}"
 		  }
