@@ -1,6 +1,6 @@
 ```mermaid
 flowchart TB
-    Start["Start"]
+    Start(["Start"])
     Loan_Type["Loan Type"]
     Home_Description["Home Description"]
     Property_Use["Property Use"]
@@ -35,6 +35,7 @@ flowchart TB
     a24["Submit Transaction"]
     d8{"Error"}
     redirect["Redirect to slash thank-you"]
+    End(["End"])
     Loan_Type_=_Purchase?--"Yes"-->ttp
     Loan_Type_=_Purchase?--"No"-->d1
     First_Time_Home_Buyer--" "-->a10
@@ -80,5 +81,6 @@ flowchart TB
     Email--" "-->anz
     anz--" "-->a24
     a24--" "-->d8
+    redirect--" "-->End
 
 ```
