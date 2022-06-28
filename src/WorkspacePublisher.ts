@@ -111,7 +111,14 @@ export class WorkspacePublisher
             case "DECISION":
                 sb.appendLine(`${indentation}${item.id}{${brokenLabel}}`);
                 break;
-        }
+            case "START":
+            case "END":
+                sb.appendLine(`${indentation}${item.id}([${brokenLabel}])`);
+                break;
+            case "SUB":
+                sb.appendLine(`${indentation}${item.id}[[${brokenLabel}]]`);
+                break;
+            }
 
         return sb.text;
     }

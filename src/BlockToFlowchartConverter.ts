@@ -84,11 +84,28 @@ convertFlowItem(items: FlowchartItem[], connections: FlowchartRelationship[], bl
     var label: string = "";
     var description: string = "";
 
+    // ignore a comment
+    if(block.blockText[0] === '\'')
+    {
+        return;
+    }
+
     if(parts.length === 1)
     {
-        itemType = "ACTION";
-        label = parts[0].trim();
-        itemId = this.fixId(parts[0]);
+        switch(parts[0].toUpperCase())
+        {
+            case "START":
+            case "END":
+                itemType = parts[0];
+                label = parts[0].trim();
+                itemId = this.fixId(parts[0]);
+                break;
+            default:
+                itemType = "ACTION";
+                label = parts[0].trim();
+                itemId = this.fixId(parts[0]);
+                break;
+        }
     }
     else if(block.blockText[0] === '"')
     {
@@ -142,6 +159,7 @@ convertFlowItem(items: FlowchartItem[], connections: FlowchartRelationship[], bl
         //     items.push(newItem);
         //     break;
         case "ACTION":
+        case "SUB":
             newItem = new FlowchartItem ();
             newItem.itemType = itemType;
             newItem.label = label;
@@ -172,6 +190,28 @@ convertFlowItem(items: FlowchartItem[], connections: FlowchartRelationship[], bl
                  var child = block.children[cn];
                  this.convertConnection(itemId, items, connections, child);
             }
+            items.push(newItem);
+            break;
+        case "START":
+            newItem = new FlowchartItem ();
+            newItem.itemType = itemType;
+            newItem.label = "Start";
+            if(itemId === "")
+            {
+                itemId = this.fixId(label);
+            }
+            newItem.id = itemId;
+            items.push(newItem);
+            break;
+        case "END":
+            newItem = new FlowchartItem ();
+            newItem.itemType = itemType;
+            newItem.label = "End";
+            if(itemId === "")
+            {
+                itemId = this.fixId(label);
+            }
+            newItem.id = itemId;
             items.push(newItem);
             break;
         case "CONNECTION":

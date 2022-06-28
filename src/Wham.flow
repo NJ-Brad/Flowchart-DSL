@@ -1,6 +1,7 @@
 flow 
 [
-    "Start"
+	' https://mermaid-js.github.io/mermaid/#/flowchart
+    Start
     "Loan Type"
 	"Home Description"
 	"Property Use"
@@ -72,11 +73,12 @@ flow
 	"Email"
 	"Address and Zip" anz
 	action "Submit Transaction" a24
+'	sub "Verify Results"
 	decision "Error" d8
 	[
 		Yes anz
 		No redirect
 	]
 	"Redirect to slash thank-you" redirect
-
+	End
 ]
