@@ -31,9 +31,9 @@
 			"preLaunchTask": "${defaultBuildTask}"
 		},
 		{
+			"name": "Launch Program",
 			"type": "node",
 			"request": "launch",
-			"name": "Launch Program",
 			"program": "${workspaceFolder}/out/process-flowchart-dsl.js",
 			"args": ["myFolder/path/app.js"],
 			"windows": {
