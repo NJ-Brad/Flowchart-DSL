@@ -41,6 +41,17 @@
 			},
 			"preLaunchTask": "${defaultBuildTask}"
 		  }
-	
+		  ,
+		  {
+			  "name": "Process Whammie",
+			  "type": "node",
+			  "request": "launch",
+			  "program": "${workspaceFolder}/out/process-flowchart-dsl.js",
+			  "args": ["myFolder/path/app.js"],
+			  "windows": {
+				"args": ["${workspaceFolder}\\src\\Whammie.flow", "${workspaceFolder}\\src\\Whammie.md"]
+			  },
+			  "preLaunchTask": "${defaultBuildTask}"
+			}	
 	]
 }

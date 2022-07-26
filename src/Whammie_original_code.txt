@@ -1,0 +1,25 @@
+export const shortFormQuestions: CustomQuestionDto[] =
+  [
+    { component: QuestionNames.LoanType },
+    { component: QuestionNames.HomeDescription },
+    { component: QuestionNames.TimeframeToPurchase, pageLogic: ShowOnlyForPurchase, },
+    { component: QuestionNames.FirstTimeHomeBuyer, pageLogic: ShowOnlyForPurchase, },
+    { component: QuestionNames.HomeValue, pageLogic: ShowOnlyForCashoutAndRefinance, },
+    { component: QuestionNames.MortgageBalance, pageLogic: ShowOnlyForCashoutAndRefinance },
+    { component: QuestionNames.Military },
+    { component: QuestionNames.WorkingWithAnAgent },
+    { component: QuestionNames.PurchasePrice, pageLogic: ShowOnlyForPurchase, },
+    { component: QuestionNames.DownPayment, pageLogic: ShowOnlyForPurchase, },
+    { component: QuestionNames.CreditProfile },
+    // displayPii
+    {
+      component: QuestionNames.PersonalInfo,
+      pageLogic: {
+        stopBlock: {
+          buttonText: "Submit",
+          submissionType: SubmissionTypes.Traditional,
+          redirectAfterSubmit: "/thank-you",
+        },
+      },
+    }
+  ];
