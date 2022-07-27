@@ -81,14 +81,23 @@ convertFlowItem(items: FlowchartItem[], connections: FlowchartRelationship[], bl
         return;
     }
 
-    if(parts.length === 4)
+    if(parts.length < 2)
     {
-        if(parts[1].toLowerCase() === "component:")
-        {
-            itemType = "ACTION";
-            label = parts[2];
-            itemId = parts[2];
-        }
+        return;
+    }
+
+    if(parts[0].toLowerCase() === "component:")
+    {
+        itemType = "ACTION";
+        label = parts[1];
+        itemId = parts[1];
+    }
+
+    if(parts[1].toLowerCase() === "component:")
+    {
+        itemType = "ACTION";
+        label = parts[2];
+        itemId = parts[2];
     }
 
     if(parts.length === 6)
