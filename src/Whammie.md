@@ -17,6 +17,7 @@ flowchart TB
     DownPayment_cnd{"Show Only For Purchase,"}
     DownPayment["Down Payment"]
     CreditProfile["Credit Profile"]
+    PersonalInfo["Personal Info"]
     TimeframeToPurchase_cnd--"Yes"-->TimeframeToPurchase
     TimeframeToPurchase_cnd--"No"-->FirstTimeHomeBuyer_cnd
     FirstTimeHomeBuyer_cnd--"Yes"-->FirstTimeHomeBuyer
@@ -39,5 +40,6 @@ flowchart TB
     WorkingWithAnAgent--" "-->PurchasePrice_cnd
     PurchasePrice--" "-->DownPayment_cnd
     DownPayment--" "-->CreditProfile
+    CreditProfile--" "-->PersonalInfo
 
 ```
