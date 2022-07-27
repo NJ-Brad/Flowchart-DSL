@@ -52,9 +52,15 @@ import { StringStream } from "./StringStream";
                      case '[':
                          if (!inQuote)
                          {
-                             // add to the previous node (Not the potential new one)
-                             this.parse(blocks[blocks.length - 1].children, sr, level + 1);
-                         }
+                            if(blocks.length === 0)
+                            {
+                                this.parse(blocks, sr, level);
+                            }
+                            else{
+                                // add to the previous node (Not the potential new one)
+                                this.parse(blocks[blocks.length - 1].children, sr, level + 1);
+                            }
+                        }
                          else
                          {
                              sb.append(character);

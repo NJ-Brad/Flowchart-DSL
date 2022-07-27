@@ -49,7 +49,7 @@
 			  "program": "${workspaceFolder}/out/process-flowchart-dsl.js",
 			  "args": ["myFolder/path/app.js"],
 			  "windows": {
-				"args": ["${workspaceFolder}\\src\\Whammie.flow", "${workspaceFolder}\\src\\Whammie.md"]
+				"args": ["${workspaceFolder}\\src\\Whammie.ts_flow", "${workspaceFolder}\\src\\Whammie.md"]
 			  },
 			  "preLaunchTask": "${defaultBuildTask}"
 			}	

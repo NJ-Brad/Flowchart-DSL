@@ -5,8 +5,11 @@ import { BlockParser } from './BlockParser';
 import { StringBuilder } from "./Stringbuilder";
 import { StringStream } from "./StringStream";
 import { BlockToFlowchartConverter} from "./BlockToFlowchartConverter";
+import { CodeBlockToFlowchartConverter} from "./CodeBlockToFlowchartConverter";
 import { FlowchartWorkspace } from "./FlowchartWorkspace";
 import { WorkspacePublisher } from "./WorkspacePublisher";
+
+import {FileUtils} from "./FileUtils";
 
 let message: string = 'Hello World';
 console.log(message);
@@ -116,9 +119,19 @@ var bp: BlockParser = new BlockParser();
 var block: Block = new Block();
 bp.parse(block.children, stream, 0);
 
-var btc4: BlockToFlowchartConverter = new BlockToFlowchartConverter();
+var extension: string = FileUtils.fileExtension(myArgs[0]);
+var ws: FlowchartWorkspace = new FlowchartWorkspace();
 
-var ws: FlowchartWorkspace = btc4.convert(block);
+if (extension.toUpperCase() === "TS_FLOW")
+{
+    var cbtc4: CodeBlockToFlowchartConverter = new CodeBlockToFlowchartConverter();
+    ws = cbtc4.convert(block);
+}
+else
+{
+    var btc4: BlockToFlowchartConverter = new BlockToFlowchartConverter();
+    ws = btc4.convert(block);
+}
 
 var publisher: WorkspacePublisher = new WorkspacePublisher();
 
@@ -126,3 +139,5 @@ var publisher: WorkspacePublisher = new WorkspacePublisher();
 
 var newText = "```mermaid" + "\r\n" + publisher.publish(ws, "Component", "MERMAID") + "\r\n" + "```";
 fs.writeFileSync(myArgs[1], newText);
+
+
