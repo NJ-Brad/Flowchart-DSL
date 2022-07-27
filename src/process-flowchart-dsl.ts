@@ -10,6 +10,7 @@ import { FlowchartWorkspace } from "./FlowchartWorkspace";
 import { WorkspacePublisher } from "./WorkspacePublisher";
 
 import {FileUtils} from "./FileUtils";
+import { MermaidRunner } from "./MermaidRunner";
 
 let message: string = 'Hello World';
 console.log(message);
@@ -140,4 +141,12 @@ var publisher: WorkspacePublisher = new WorkspacePublisher();
 var newText = "```mermaid" + "\r\n" + publisher.publish(ws, "Component", "MERMAID") + "\r\n" + "```";
 fs.writeFileSync(myArgs[1], newText);
 
+// generate the png file
+var imgName : string;
+var rnr: MermaidRunner = new MermaidRunner();
+
+imgName = FileUtils.changeExtension(myArgs[1], "png");
+//imgName = path.join(destinationFolder, filename)+".png";
+rnr.convert(`\"${myArgs[1]}\"`, `\"${imgName}\"`);
+console.log(`${myArgs[0]} --> ${imgName}`);
 
