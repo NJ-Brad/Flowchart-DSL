@@ -144,9 +144,15 @@ fs.writeFileSync(myArgs[1], newText);
 // generate the png file
 var imgName : string;
 var rnr: MermaidRunner = new MermaidRunner();
+var mmdName : string;
 
 imgName = FileUtils.changeExtension(myArgs[1], "png");
+mmdName = FileUtils.changeExtension(myArgs[1], "mmd");
+
+newText = publisher.publish(ws, "Component", "MERMAID");
+fs.writeFileSync(mmdName, newText);
+
 //imgName = path.join(destinationFolder, filename)+".png";
-rnr.convert(`\"${myArgs[1]}\"`, `\"${imgName}\"`);
-console.log(`${myArgs[0]} --> ${imgName}`);
+rnr.convert(`\"${mmdName}\"`, `\"${imgName}\"`);
+console.log(`${mmdName} --> ${imgName}`);
 

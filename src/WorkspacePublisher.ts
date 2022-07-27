@@ -47,7 +47,8 @@ export class WorkspacePublisher
 
     private mermaidHeader(workspace: FlowchartWorkspace): string     {
         var sb: StringBuilder = new StringBuilder();
-        sb.append("flowchart TB");
+        //sb.append("flowchart TB");
+        sb.append("graph TD");
         sb.append("\r\n");
 // classDef borderless stroke-width:0px
 // classDef darkBlue fill:#00008B, color:#fff
